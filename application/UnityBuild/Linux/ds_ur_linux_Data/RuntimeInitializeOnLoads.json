@@ -1,0 +1,1 @@
+{"root":[{"assemblyName":"Unity.Robotics.UrdfImporter","nameSpace":"Assimp","className":"AssimpUnity","methodName":"InitializePlugin","loadTypes":1,"isUnityClass":true},{"assemblyName":"Unity.VisualScripting.Core","nameSpace":"Unity.VisualScripting","className":"RuntimeVSUsageUtility","methodName":"RuntimeInitializeOnLoadBeforeSceneLoad","loadTypes":1,"isUnityClass":true}]}
