@@ -14,7 +14,16 @@ Furthermore, an example of a DS made using these programs is illustrated on [you
 
 To connect to URSim we use the [_urinterface_](https://gitlab.au.dk/clagms/urinterface/-/tree/data_publisher?ref_type=heads) Python library.
 We specifically use the _data_publisher_ branch, as it has a built-in ZeroMQ publisher, that publishes the joint angles to a local port 5556.
+This means to install the library, you need to:
 
+1. clone the repository
+```
+git clone https://gitlab.au.dk/clagms/urinterface.git
+```
+2. switch to the _data_publisher_ branch
+```
+git switch data_publisher
+```
 
 _urinterface_ builds on top of the [Real-Time Data Exchange (RTDE)](https://www.universal-robots.com/articles/ur/interface-communication/real-time-data-exchange-rtde-guide/) protocol from [Universal Robots (UR)](https://www.universal-robots.com/).
 The RTDE protocol is a server that runs on the UR robot when it is powered on, allowing clients to connect to it through the IP address of the robot and specific ports (specified in the RTDE description webpage).
