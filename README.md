@@ -175,6 +175,7 @@ The visualization must connect to a local port, which is currently hardcoded in 
 
 ## Running the DS with URSim
 
+### Instructions
 1. Run URSim
 2. Check the IP address of the robot and use that value for the variable `vm_ip` in the [ur_connector.py](application/PythonBroker/ur_connector.py) script.
 3. Open a terminal in the same location as the [ur_connector.py](application/PythonBroker/ur_connector.py) script.
@@ -194,6 +195,12 @@ Once the application is running enter the port number 5556 and press Enter.
 6. Command the robot to move either through URSim directly, or through the [ur_connector.py](application/PythonBroker/ur_connector.py) script, by typinh either _1_ or _2_ in the terminal. 
 7. To close the application, you must close Unity first, then the [ur_connector.py](application/PythonBroker/ur_connector.py) script, and URSim. To close the [ur_connector.py](application/PythonBroker/ur_connector.py) script, you can type _c_ in the terminal and the connection will terminate.
 
+
+### Example
+
+The following recording shows the DS running with URSim. As you can see in the recording, the Unity visualization is faster at visualizing the changes than URSim is, although the joint angles are being sent from URSim to Unity to visualize.
+
+![DS visualization](resources/ds_ursim.gif)
 
 ## Known issues
 If the computer region has comma as the decimal separator, then the visualization of the joints may be incorrect, as Unity uses a dot as the decimal separator.
