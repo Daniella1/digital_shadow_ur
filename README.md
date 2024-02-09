@@ -200,7 +200,22 @@ Once the application is running enter the port number 5556 and press Enter.
 
 The following recording shows the DS running with URSim. As you can see in the recording, the Unity visualization is faster at visualizing the changes than URSim is, although the joint angles are being sent from URSim to Unity to visualize.
 
-![DS visualization](resources/ds_ursim.gif)
+![DS visualization URSim](resources/ds_ursim.gif)
+
+## Running the DS on the physical robot
+
+### Through ethernet connection
+#### Setting up the network connection
+The robot and your PC need to have the same gateway, and I suggest setting the robot's IP to `192.168.0.11` and the PC's ethernet IP to `192.168.0.12` and the default gateway for both to be `192.168.0.1`.
+For changing the robot IP, see [ursim_guide.pdf](resources/ursim_guide.pdf).
+
+To be able to control the physical robot from the PC (through urinterface), you need to change the control from Local to Remote (see the video below).
+
+<video width="740" height="640" controls>
+  <source src="resources/ds_physical_robot.mp4" type="video/mp4">
+</video>
+
+### Through wifi connection
 
 ## Known issues
 If the computer region has comma as the decimal separator, then the visualization of the joints may be incorrect, as Unity uses a dot as the decimal separator.
