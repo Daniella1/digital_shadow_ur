@@ -211,9 +211,11 @@ For changing the robot IP, see [ursim_guide.pdf](resources/ursim_guide.pdf).
 
 To be able to control the physical robot from the PC (through urinterface), you need to change the control from Local to Remote (see the video below).
 
-<video width="740" height="640" controls>
-  <source src="resources/ds_physical_robot.mp4" type="video/mp4">
-</video>
+
+
+https://github.com/Daniella1/digital_shadow_ur/assets/14126328/598a9982-4325-4075-becf-82872b8374e6
+
+
 
 ### Through wifi connection
 
