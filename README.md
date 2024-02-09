@@ -14,6 +14,8 @@ Furthermore, an example of a DS made using these programs is illustrated on [you
 
 To connect to URSim we use the [_urinterface_](https://gitlab.au.dk/clagms/urinterface/-/tree/data_publisher?ref_type=heads) Python library.
 We specifically use the _data_publisher_ branch, as it has a built-in ZeroMQ publisher, that publishes the joint angles to a local port 5556.
+
+### Installation
 This means to install the library, you need to:
 
 1. clone the repository
@@ -25,6 +27,7 @@ git clone https://gitlab.au.dk/clagms/urinterface.git
 git switch data_publisher
 ```
 
+### Details
 _urinterface_ builds on top of the [Real-Time Data Exchange (RTDE)](https://www.universal-robots.com/articles/ur/interface-communication/real-time-data-exchange-rtde-guide/) protocol from [Universal Robots (UR)](https://www.universal-robots.com/).
 The RTDE protocol is a server that runs on the UR robot when it is powered on, allowing clients to connect to it through the IP address of the robot and specific ports (specified in the RTDE description webpage).
 
@@ -67,7 +70,7 @@ To publish data to the socket, the following function must be called, with the d
 robot.start_recording(filename=filename, overwrite=True, frequency=50, config_file=config_file, publish_topic=["actual_q"])
 ```
 
-
+### Using urinterface
 To exemplify how `urinterface` can be used, we show a small extract of our code:
 ```python
 from urinterface.robot_connection import RobotConnection 
@@ -110,32 +113,33 @@ ur5e.stop_recording()
 
 
 ## URSim
-### For Non-Linux
+### Installation
+#### For Non-Linux
 Instructions for installing URSim on a non-Linux computer can be found in the _urinterface_ repository at [URSim install instructions](https://gitlab.au.dk/clagms/urinterface/-/blob/data_publisher/setup_with_ursim/setup_ursim.md?ref_type=heads).
 If you are running a windows computer then you need a virtual machine, e.g., [VMware](https://www.vmware.com/nordics/products/workstation-player.html) or [VirtualBox](https://www.virtualbox.org/).
 
-### For Linux
+#### For Linux
 For installing URSim on a Linux-based computer, follow these steps:
-#### Install dependencies
+##### Install dependencies
 ```
 $apt install lib32gcc1 lib32stdc++6 libc6-i386
 $apt install libcurl4 fonts-ipafont fonts-baekmuk fonts-nanum fonts-arphic-uming fonts-arphic-ukai
 $apt install openjdk-8-jdk libjava3d-java x11-apps mesa-utils lib32z1
 ```
 
-#### Download URSim software "URSim_Linux-5.5.1.82186.tar.gz"
+##### Download URSim software "URSim_Linux-5.5.1.82186.tar.gz"
 ```cmd
 $sudo service dbus start
 $tar xzf URSim_Linux-5.5.1.82186.tar.gz
 ```
-#### install all dependencies given in the downloaded archive
+##### Install all dependencies given in the downloaded archive
 ```cmd
 $cd ursim-5.5.1.82186/ursim-dependencies
 $dpkg -i *.deb
 $cd ursim-5.5.1.82186
 ```
 
-#### Update install.sh with the following changes
+##### Update install.sh with the following changes
 ```
 71c73
 < commonDependencies='libcurl3 libjava3d-* ttf-dejavu* fonts-ipafont fonts-baekmuk fonts-nanum fonts-arphic-uming fonts-arphic-ukai'
@@ -147,7 +151,7 @@ $cd ursim-5.5.1.82186
 > pkexec bash -c "apt-get -y install lib32gcc1 lib32stdc++6 libc6-i386 $commonDependencies && (echo '$packages' | xargs dpkg -i --force-overwrite)" 88 bash -c "sudo apt-get -y install lib32gcc1 lib32stdc++6 libc6-i386 $commonDependencies && (echo '$packages' | xargs sudo dpkg -i --force-overwrite)"
 ````
 
-#### Install and start URSim software
+##### Install and start URSim software
 ```cmd
 $./install.sh
 $./start-ursim.sh
@@ -161,24 +165,22 @@ Instructions for using URSim, finding the IP address of the robot, and connectin
 ## ZeroMQ
 
 We use the [pub/sub pattern](https://learning-0mq-with-pyzmq.readthedocs.io/en/latest/pyzmq/patterns/pubsub.html).
-We use a Python script for running the ZeroMQ publisher, which sends the joint angle data on port 5556. This is built-in in the _urinterface_ branch _data_publisher_.
+We use a Python script for running the ZeroMQ publisher, which sends the joint angle data on port 5556. This is currently built-in in the _urinterface_ branch _data_publisher_.
 
 ## Unity
-The current application is built for Windows and Linux platforms.
-The ZeroMQ socket port is currently implemented as an option in Unity, however, it is hardcoded to port 5556 in the _urinterface_ for now, and therefore this socket number should be used in the Unity application.
+We have set up an application with a UR5e robot in Unity, which has been built to be run on Windows and Linux. 
+The visualization must connect to a local port, which is currently hardcoded in `urinterface` as 5556, and therefore when running the Unity application, the port number 5556 must be inputted.
+ 
+ <!-- TODO: add gif showing the final setup of URSim and Unity visualization. -->
 
+## Running the DS with URSim
 
-## Running the DS
+1. Run URSim
+2. Check the IP address of the robot and use that value for the variable `vm_ip` in the [ur_connector.py](application/PythonBroker/ur_connector.py) script.
+3. Open a terminal in the same location as the [ur_connector.py](application/PythonBroker/ur_connector.py) script.
+4. Run the program by typing the following in the terminal: ```python ur_connector.py```
+5. Run the Unity application from the UnityBuild folder. 
 
-Either connect to URSim or the physical robot.
-Check the IP address of the robot and input that IP into the _ur_connector.py_ script.
-Then, run:
-
-```
-python application/PythonBroker/ur_connector.py
-```
-
-Run the Unity application from the UnityBuild folder. 
 For Linux follow:
 ```
 $cd application/UnityBuild/Linux
@@ -186,9 +188,12 @@ $chmod +x ds_ur_linux.x86_64
 $./ds_ur_linux.x86_64
 ```
 For Windows open the `DigitalShadowsUR.exe` located in `applications/UnityBuild/Windows`.
+
 Once the application is running enter the port number 5556 and press Enter.
 
-Then you can either physically/manually move the robot, or command it through the terminal that is running the `ur_connector.py` and pressing _1_, or _2_. To quit the application, press _c_.
+6. Command the robot to move either through URSim directly, or through the [ur_connector.py](application/PythonBroker/ur_connector.py) script, by typinh either _1_ or _2_ in the terminal. 
+7. To close the application, you must close Unity first, then the [ur_connector.py](application/PythonBroker/ur_connector.py) script, and URSim. To close the [ur_connector.py](application/PythonBroker/ur_connector.py) script, you can type _c_ in the terminal and the connection will terminate.
+
 
 ## Known issues
 If the computer region has comma as the decimal separator, then the visualization of the joints may be incorrect, as Unity uses a dot as the decimal separator.
